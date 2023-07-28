@@ -5,6 +5,12 @@ def on_on_overlap(sprite, otherSprite):
     otherSprite.set_velocity(-30, -30)
 sprites.on_overlap(SpriteKind.projectile, SpriteKind.satellite, on_on_overlap)
 
+def on_on_overlap2(sprite2, otherSprite2):
+    scene.camera_shake(4, 500)
+    sprite2.destroy(effects.fire, 100)
+    info.change_life_by(-1)
+sprites.on_overlap(SpriteKind.enemy, SpriteKind.player, on_on_overlap2)
+
 def on_a_pressed():
     global projectile
     projectile = sprites.create_projectile_from_sprite(img("""
@@ -26,15 +32,9 @@ def on_a_pressed():
         -150)
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
-def on_on_overlap2(sprite2, otherSprite2):
-    scene.camera_shake(4, 500)
-    sprite2.destroy(effects.fire, 100)
-    info.change_life_by(-1)
-sprites.on_overlap(SpriteKind.enemy, SpriteKind.player, on_on_overlap2)
-
 def on_on_score():
     game.game_over(True)
-info.on_score(20, on_on_score)
+info.on_score(50, on_on_score)
 
 myRock: Sprite = None
 mySat: Sprite = None

@@ -4,6 +4,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Satellite, function on_on_ov
     otherSprite.sayText("Uploading...")
     otherSprite.setVelocity(-30, -30)
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function on_on_overlap2(sprite2: Sprite, otherSprite2: Sprite) {
+    scene.cameraShake(4, 500)
+    sprite2.destroy(effects.fire, 100)
+    info.changeLifeBy(-1)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
     
     projectile = sprites.createProjectileFromSprite(img`
@@ -21,12 +26,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function on_a_pressed() {
                     . 1 .
         `, myShip, 0, -150)
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function on_on_overlap2(sprite2: Sprite, otherSprite2: Sprite) {
-    scene.cameraShake(4, 500)
-    sprite2.destroy(effects.fire, 100)
-    info.changeLifeBy(-1)
-})
-info.onScore(20, function on_on_score() {
+info.onScore(50, function on_on_score() {
     game.gameOver(true)
 })
 let myRock : Sprite = null
